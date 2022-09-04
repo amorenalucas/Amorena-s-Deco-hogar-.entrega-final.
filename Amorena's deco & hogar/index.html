@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amorena's Deco & hogar</title>
+    <script src="https://kit.fontawesome.com/df59baf6b8.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https//fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="./stock.js"></script>
+    <script defer src="./modal.js"></script>
+    <script defer src="app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+</head>
+<body onload="LoadCarrito()"></body>
+    <header>
+        <h1 id="titulo" class="titulo">Amorena's Deco & hogar</h1>
+        <button id="boton-carrito"><i class="fas fa-shopping-cart"></i><span id="contadorcarrito">0</span></button>
+    </header>
+    <main id="contenedor-productos">
+
+      
+    </main>
+    
+      <div class="modal-contenedor">
+        <div class="modal-carrito">
+            <h3>Carrito</h3>
+            <button id="carritoCerrar"><i class="fas fa-times-circle"></i></button>
+            <div id="carrito-contenedor">
+
+                <div id="ListaProducto">
+
+
+
+                </div>
+
+            </div>
+            <label class="precioProducto" id="precioTotal">Precio total: $ </label>
+        </div>
+      </div>
+      <script>
+      function FinalizarCompra(){
+
+        // Default export is a4 paper, portrait, using millimeters for units
+        const doc = new jspdf({unit: "in",
+                                format: [8, 6]});
+
+        let alto = 1;
+        let total = 0;
+        doc.text("Amorena's Deco & hogar", 1.75, alto);
+        
+        alto = alto + 0.5
+
+        articulos.forEach((item) => {
+
+            alto = alto + 0.5;
+
+            doc.text(`${item.nombre} - x ${item.cantidad} $ ${ item.precio}` ,0, alto)
+
+            total = total + (item.precio * item.cantidad);
+            
+        });
+
+        alto = alto + 0.5;
+
+        doc.text("Total: $" + total, 1, alto);
+
+        alto = alto + 0.5;
+        doc.text("Nombre: " + document.getElementById(`NombreCompleto`).value, 1.75, alto);
+        alto = alto + 0.5;
+        doc.text("Email: " + document.getElementById(`Email`).value, 1.75, alto);
+        alto = alto + 0.5;
+        doc.text("Direccion: " + document.getElementById(`Direccion`).value, 1.75, alto);
+        
+       
+        doc.save("Pedido.pdf");
+
+    }
+
+  </script>
+</body>
+</html>
